@@ -120,15 +120,17 @@ main{
     background-color: rgb(246, 246, 246);
  }
  .blur{
-    position: absolute;
+    position: fixed;
     top: 0;
-    height: 100vh;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.3);
  }
 
  /* ESTILO DA JANELA ADICIONAR RECEITA*/
-
 .popup{
     position: fixed;
     top: 20%;
@@ -139,7 +141,7 @@ main{
 
 .addReceita{
     padding: 3%;
-    height: 400px;
+    height: 60vh;
     position: relative;
     background-color: white;
     border-radius: 20px;
@@ -160,5 +162,18 @@ main{
  @media only screen and (max-width: 600px){
     .saldo_single{
         width: 100%;
+    }
+    .popup{
+        width: 70%;
+        left: 15%;
+    }
+    
+ }
+ @media only screen and (max-height: 500px){
+    .popup{
+        top: 10%;
+    }
+    .addReceita{
+        height: 80vh;
     }
  }

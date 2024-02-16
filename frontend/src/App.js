@@ -41,7 +41,7 @@ function App() {
   return (
 
       <div id="app">
-        <div className={addSaldo === "aberto" ? "blur" : ""} onClick={closedAddSaldoPopUp}></div>
+         <div className={addSaldo === "aberto" ? "blur" : ""} onClick={closedAddSaldoPopUp}></div>
         <div className={addGasto === "aberto" ? "blur" : ""} onClick={closedAddGastoPopUp}></div>
         <p className='title'>Controle suas finanças!</p>
         <main>
@@ -91,18 +91,18 @@ function App() {
         </main>
 
         {addSaldo === "aberto" && (
-          <div className='popup'>
-            {/* Conteúdo que será exibido quando isOpen for "aberto" */}
-            <div className='addReceita'>
-              <p>X</p>
-              <div className='addReceitaTitle'>Adicionar Receita</div>
-              <div className='addReceitaInput'>
-                <p>Valor</p>
-                <input type='number' placeholder='R$'></input>
-                <button>Confirmar</button>
+              <div className='popup'>
+              {/* Conteúdo que será exibido quando isOpen for "aberto" */}
+              <div className='addReceita'>
+                <p>X</p>
+                <div className='addReceitaTitle'>Adicionar Receita</div>
+                <div className='addReceitaInput'>
+                  <p>Valor</p>
+                  <input type='number' placeholder='R$'></input>
+                  <button>Confirmar</button>
+                </div>
               </div>
             </div>
-          </div>
         ) || null}
 
       {addGasto === "aberto" && (
