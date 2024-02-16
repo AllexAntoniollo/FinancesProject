@@ -1,10 +1,12 @@
 import React from 'react';
 import './style.css';
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
+import Registros from './componentes/historico'
+import api from './services/api'
 
 function App() {
     
+
   const [addSaldo, setAddSaldo] = useState("fechado");
     function changeAddSaldo(){
       if(addSaldo === "aberto"){
@@ -37,12 +39,42 @@ function App() {
       } else {
       }
     }
+
+
+    const [descricao, setDescricao] = useState('');
+    const [recebidos, setRecebidos] = useState(0);
+    const [gastos, setGastos] = useState(0);
+    const [allFinances, setAllFinances] = useState([]);
+
+    useEffect(() =>{
+      async function getAllFinances(){
+        const response = await api.get('/finances',)
+
+        setAllFinances(response.data)
+      }
+
+      getAllFinances()
+    }, [])
+
+    async function handleSubmit(e){
+      e.preventDefault();
+
+      const response = await api.post('/finances',{
+        descricao,
+        recebidos,
+        gastos
+      });
+
+      setDescricao('');
+      setRecebidos('');
+      setGastos('');
+    }
     
   return (
 
       <div id="app">
-         <div className={addSaldo === "aberto" ? "blur" : ""} onClick={closedAddSaldoPopUp}></div>
-        <div className={addGasto === "aberto" ? "blur" : ""} onClick={closedAddGastoPopUp}></div>
+         <div className={addSaldo === "aberto" ? "blur" : ""} onClick={() => {closedAddSaldoPopUp(''); setDescricao(''); setRecebidos('')}}></div>
+        <div className={addGasto === "aberto" ? "blur" : ""} onClick={() => {closedAddGastoPopUp(''); setDescricao(''); setGastos('')}}></div>
         <p className='title'>Controle suas finanças!</p>
         <main>
           <div className='saldo'>
@@ -89,32 +121,50 @@ function App() {
           <div className='clear'></div>
 
         </main>
+        <div className='registros'>
+          <div className='registrosTabela'>
+            <div className='tableTitles'>
+              <p>Registro</p>
+              <p>Receita</p>
+              <p>Gasto</p>
+            </div>
+            {allFinances.map(data =>(
+              <Registros data={data}/>
+            ))}
+          </div>
+        </div>
 
         {addSaldo === "aberto" && (
               <div className='popup'>
               {/* Conteúdo que será exibido quando isOpen for "aberto" */}
               <div className='addReceita'>
-                <p>X</p>
-                <div className='addReceitaTitle'>Adicionar Receita</div>
-                <div className='addReceitaInput'>
-                  <p>Valor</p>
-                  <input type='number' placeholder='R$'></input>
-                  <button>Confirmar</button>
+                  <h1 className='close' onClick={() => {closedAddSaldoPopUp(''); setDescricao(''); setRecebidos('')}}>X</h1>
+                  <div className='addReceitaTitle'>Adicionar Receita</div>
+                  <div className='addReceitaInput'>
+                    <form onSubmit={handleSubmit}>
+                    <p>Valor</p>
+                      <input type='text' placeholder='Receita' value={descricao} onChange={e => setDescricao(e.target.value)}></input>
+                      <input type='number' placeholder='R$' value={recebidos} onChange={e => setRecebidos(e.target.value)}></input>
+                      <button>Confirmar</button>
+                    </form>
+                  </div>
                 </div>
               </div>
-            </div>
         ) || null}
 
       {addGasto === "aberto" && (
           <div className='popup'>
             {/* Conteúdo que será exibido quando isOpen for "aberto" */}
             <div className='addReceita'>
-              <p>X</p>
+              <h1 className='close' onClick={() => {closedAddGastoPopUp(''); setDescricao(''); setGastos('')}}>X</h1>
               <div className='addReceitaTitle'>Adicionar Gasto</div>
               <div className='addReceitaInput'>
+                <form onSubmit={handleSubmit}>
                 <p>Valor</p>
-                <input type='text' placeholder='R$'></input>
-                <button>Confirmar</button>
+                  <input type='text' placeholder='Despesa' value={descricao} onChange={e => setDescricao(e.target.value)}></input>
+                  <input type='text' placeholder='R$' value={gastos} onChange={e => setGastos(e.target.value)}></input>
+                  <button>Confirmar</button>
+                </form>
               </div>
             </div>
           </div>

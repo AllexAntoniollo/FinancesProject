@@ -10,13 +10,19 @@ module.exports = {
 
 
     async create(request, response){
-        const {recebidos, gastos} = request.body;
+        const {descricao, recebidos, gastos} = request.body;
 
-        if(!recebidos || !gastos){
+        if(descricao){
+            if(!recebidos && !gastos){
+                return response.status(400).json({error:"necessário entrar com os dados"});
+            }
+        }else{
             return response.status(400).json({error:"necessário entrar com os dados"});
         }
+        
 
         const financesCreated = await Finances.create({
+            descricao,
             recebidos,
             gastos
         });

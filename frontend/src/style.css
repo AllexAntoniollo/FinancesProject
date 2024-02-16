@@ -138,7 +138,6 @@ main{
     width: 40%;
     z-index: 999;
 }
-
 .addReceita{
     padding: 3%;
     height: 60vh;
@@ -146,9 +145,103 @@ main{
     background-color: white;
     border-radius: 20px;
 }
+.close{
+    font-size: 22px;
+    float: right;
+    color: red;
+    cursor: pointer;
+}
+.addReceitaTitle{
+    margin-top: 30px;
+    font-size: 18px;
+    color: gray;
+    width: 100%;
+    text-align: center;
+}
+.addReceitaInput{
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+}
+.addReceitaInput input{
+    margin-top: 10px;
+    padding: 1%;
+    border-radius: 10px;
+    width: 75%;
+    height: 30px;
+    border: 1px solid rgb(214, 212, 212);
+}
+.addReceitaInput button{
+    width: 60%;
+    margin-top: 20px;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    border: 0;
+}
+.addReceitaInput button:hover{
+    background-color: rgb(243, 242, 242);
+}
+
+/* ESTILO REGISTROS*/
+
+.registros{
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2%;
+    width: 80%;
+    margin: 20px auto;
+}
+.tableTitles p{
+    font-size: 20px;
+    color: rgb(112, 112, 112);
+    width: 25%;
+    border-right: 1px solid gray;
+    display: inline-block;
+    margin-left: 10px;
+    margin-bottom: 14px;
+}
+
+.historicoSingle{
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgb(225, 225, 225);
+    width: 100%;
+}
+.historicoSingle p{
+    font-size: 18px;
+    color: gray;
+    width: 25%;
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: 15px;
+}
+
+.historicoSingle button{
+    width: 6%;
+    right: 0;
+    padding: 2px;
+    margin-left: 5px;
+    border: 0;
+    cursor: pointer;
+}
+.edit{
+    border-radius: 2px;
+    color: white;
+    background-color: green;
+}
+.edit:hover{
+    background-color: rgb(1, 117, 1);
+}
+
+.delete{
+    border-radius: 2px;
+    color: white;
+    background-color: red;
+}
+.delete:hover{
+    background-color: rgb(229, 4, 4);
+}
 
 /* ESTILO DESIGN RESPONSIVO*/
-
 
  @media only screen and (max-width: 1000px) {
     .saldo{
@@ -156,6 +249,11 @@ main{
     }
     .dados{
         width: 100%;
+    }
+    .saldo{
+        padding-bottom: 20px;
+        border-right: 0;
+        border-bottom: 2px solid #d6d5d5;
     }
  }
 
@@ -171,9 +269,16 @@ main{
  }
  @media only screen and (max-height: 500px){
     .popup{
+        position: absolute;
         top: 10%;
     }
     .addReceita{
-        height: 80vh;
+        height: 350px;
+    }
+    .tableTitles p{
+        font-size: 16px;
+    }
+    .historicoSingle p{
+        font-size: 14px;
     }
  }
