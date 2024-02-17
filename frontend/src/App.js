@@ -5,9 +5,32 @@ import Registros from './componentes/historico'
 import api from './services/api'
 
 function App() {
-    
+  
+    const [totalRecebidos, setTotalRecebidos] = useState(0);
+    const [totalGasto, setTotalGasto] = useState(0);
+    const [addSaldo, setAddSaldo] = useState("fechado");
 
-  const [addSaldo, setAddSaldo] = useState("fechado");
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await api.get('/finances',);
+          setAllFinances(response.data);
+  
+          // Calcular a soma dos valores do campo "recebidos" de todos os registros
+          const somaRecebidos = response.data.reduce((total, item) => total + item.recebidos, 0);
+          const somaGasto = response.data.reduce((total, item) => total + item.gastos, 0);
+          setTotalRecebidos(somaRecebidos);
+          setTotalGasto(somaGasto);
+        } catch (error) {
+          console.error('Erro ao buscar dados do servidor:', error);
+        }
+      };
+  
+      fetchData();
+    }, []);
+
+
+
     function changeAddSaldo(){
       if(addSaldo === "aberto"){
         setAddSaldo("fechado");
@@ -68,7 +91,18 @@ function App() {
       setDescricao('');
       setRecebidos('');
       setGastos('');
+
+      setAllFinances([...allFinances, response.data])
     }
+
+    function refresh(){
+      const handleClick = () => {
+        window.location.reload();
+      }
+      handleClick();
+    }
+
+  
     
   return (
 
@@ -83,19 +117,19 @@ function App() {
               <div className='saldo_single'>
                 <div className='receita'>
                   <p>Receita Mensal</p>
-                  <h1 className='saldo_green'>R$00,00</h1>
+                  <h1 className='saldo_green'>R${totalRecebidos.toFixed(2)}</h1>
                 </div>
               </div>
               <div className='saldo_single'>
                 <div className='gastos'>
                   <p>Gasto Mensal</p>
-                  <h1 className='gasto_red'>R$00,00</h1>
+                  <h1 className='gasto_red'>R${totalGasto.toFixed(2)}</h1>
                 </div>
               </div>
               <div className='saldo_single'>
                 <div className='disponivel'>
                   <p>Saldo disponivel</p>
-                  <h1>R$00,00</h1>
+                  <h1>R${totalRecebidos.toFixed(2) - totalGasto.toFixed(2)}</h1>
                 </div>
               </div>
             </div>
@@ -143,9 +177,9 @@ function App() {
                   <div className='addReceitaInput'>
                     <form onSubmit={handleSubmit}>
                     <p>Valor</p>
-                      <input type='text' placeholder='Receita' value={descricao} onChange={e => setDescricao(e.target.value)}></input>
+                      <input maxLength="15" type='text' placeholder='Receita' value={descricao} onChange={e => setDescricao(e.target.value)}></input>
                       <input type='number' placeholder='R$' value={recebidos} onChange={e => setRecebidos(e.target.value)}></input>
-                      <button>Confirmar</button>
+                      <button onClick={refresh}>Confirmar</button>
                     </form>
                   </div>
                 </div>
@@ -161,9 +195,9 @@ function App() {
               <div className='addReceitaInput'>
                 <form onSubmit={handleSubmit}>
                 <p>Valor</p>
-                  <input type='text' placeholder='Despesa' value={descricao} onChange={e => setDescricao(e.target.value)}></input>
+                  <input maxLength="15" type='text' placeholder='Despesa' value={descricao} onChange={e => setDescricao(e.target.value)}></input>
                   <input type='text' placeholder='R$' value={gastos} onChange={e => setGastos(e.target.value)}></input>
-                  <button>Confirmar</button>
+                  <button onClick={refresh}>Confirmar</button>
                 </form>
               </div>
             </div>

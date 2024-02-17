@@ -13,6 +13,14 @@ body{
     -webkit-font-smoothing: antialiased;
     font-family: Roboto, sans-serif;
 }
+
+  /* Removendo as setas em navegadores baseados em Webkit, como Chrome e Safari */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .clear{
     clear: both;
 }
@@ -206,7 +214,9 @@ main{
     border-bottom: 1px solid rgb(225, 225, 225);
     width: 100%;
 }
-.historicoSingle p{
+.historicoSingle input{
+    border: 0;
+    padding: 2px;
     font-size: 18px;
     color: gray;
     width: 25%;
@@ -218,7 +228,7 @@ main{
 .historicoSingle button{
     width: 6%;
     right: 0;
-    padding: 2px;
+    padding: 2px 2px;
     margin-left: 5px;
     border: 0;
     cursor: pointer;
@@ -265,6 +275,12 @@ main{
         width: 70%;
         left: 15%;
     }
+    .registros{
+        width: 90%;
+    }
+    .historicoSingle input{
+        font-size: 85%;
+    }
     
  }
  @media only screen and (max-height: 500px){
@@ -274,11 +290,5 @@ main{
     }
     .addReceita{
         height: 350px;
-    }
-    .tableTitles p{
-        font-size: 16px;
-    }
-    .historicoSingle p{
-        font-size: 14px;
     }
  }

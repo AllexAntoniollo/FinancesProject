@@ -42,5 +42,4 @@ module.exports = {
 
         return response.status(401).json({error:"Nao foi encontrado o registro especifico"});
     }
-
 }
