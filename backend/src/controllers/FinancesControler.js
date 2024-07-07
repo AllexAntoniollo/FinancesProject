@@ -39,7 +39,7 @@ async function deleteRecord(request, response) {
   }
 
   return response
-    .status(401)
+    .status(404)
     .json({ error: "Nao foi encontrado o registro especifico" });
 }
 
